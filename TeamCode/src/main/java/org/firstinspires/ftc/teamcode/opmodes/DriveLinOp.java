@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name="TeleOp_mvmt")
-public class LinTeleOp1 extends LinearOpMode {
+@TeleOp(name="LinearDrive")
+public class DriveLinOp extends LinearOpMode {
 
     // instantiate motors
     private static DcMotor leftFront, rightFront, leftBack, rightBack;
