@@ -22,7 +22,6 @@ public class DriveTrigBasic extends CommandOpMode {
         // Gamepad(s)
         driver = new GamepadEx(gamepad1);
 
-
         // Drive
         drive = new DriveSubsystem(hardwareMap);
 

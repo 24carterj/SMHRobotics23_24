@@ -16,36 +16,63 @@ public class LadderSubsystem extends SubsystemBase {
     // speed
     private double speed = 1;
 
-    private final double MAX_DIST = 100;
+    private static final double MAX_POSITION = 100;
+    private static final double MIN_POSITION = 0;
 
     public LadderSubsystem(final HardwareMap hwMap, final String name) {
         ladder = new MotorEx(hwMap, name, Motor.GoBILDA.RPM_435);
-        ladder.setRunMode(Motor.RunMode.PositionControl);
-        ladder.encoder.reset();
+        ladder.setRunMode(Motor.RunMode.VelocityControl);
 
-        eff = new ElevatorFeedforward(0,0,0,0);
+        // ladder.setPositionTolerance(13.6);
+
+        ladder.encoder.reset();
+        // eff = new ElevatorFeedforward(0,0,0,0);
 
     }
 
     public void extend() {
         // completely made up value plz help
+        ladder.setRunMode(Motor.RunMode.VelocityControl);
         ladder.set(-4 * speed);
     }
 
     public void retract() {
         // completely made up value plz help
+        ladder.setRunMode(Motor.RunMode.VelocityControl);
         ladder.set(2 * speed);
     }
 
-    public void incrSpeed() {
-        // completely made up value plz help
-        speed+=0.2;
+    public void set(double power) {
+        ladder.setRunMode(Motor.RunMode.RawPower);
+        ladder.set(power);
+    }
+    public void runToPos(int position) {
+        ladder.setTargetPosition(position);
+        ladder.setRunMode(Motor.RunMode.PositionControl);
+        ladder.set(speed);
     }
 
-    public void decrSpeed() {
-        // completely made up value plz help
-        speed-=0.2;
+    public void runToPosInit(int position) {
+        ladder.setTargetPosition(position);
+        ladder.setRunMode(Motor.RunMode.PositionControl);
+        while (!ladder.atTargetPosition())
+            ladder.set(speed);
+        stop();
     }
+
+    public boolean atPos() {
+        return ladder.atTargetPosition();
+    }
+
+    public double getPos() { return ladder.getCurrentPosition(); }
+
+    public boolean cantGo() {
+        return ladder.getVelocity() > 0 && ladder.getCurrentPosition() >= MAX_POSITION ||
+               ladder.getVelocity() < 0 && ladder.getCurrentPosition() <= MIN_POSITION;
+    }
+    public void incrSpeed() { speed+=0.2; }
+
+    public void decrSpeed() { speed-=0.2; }
 
     public void stop() {
         ladder.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);

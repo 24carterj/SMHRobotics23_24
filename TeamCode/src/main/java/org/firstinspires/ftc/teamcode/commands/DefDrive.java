@@ -16,11 +16,11 @@ public class DefDrive extends CommandBase {
     private final DoubleSupplier turn;
     private DoubleSupplier heading;
 
-    public DefDrive(DriveSubsystem subsys, DoubleSupplier m, DoubleSupplier a, DoubleSupplier t) {
+    public DefDrive(DriveSubsystem subsys, DoubleSupplier lx, DoubleSupplier ly, DoubleSupplier rx) {
         driveSS = subsys;
-        magnitude = m;
-        angle = a;
-        turn = t;
+        magnitude = lx;
+        angle = ly;
+        turn = rx;
 
         addRequirements(driveSS);
     }

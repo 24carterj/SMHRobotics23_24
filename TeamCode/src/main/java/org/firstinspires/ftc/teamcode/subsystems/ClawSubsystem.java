@@ -16,11 +16,7 @@ public class ClawSubsystem extends SubsystemBase {
 
     public ClawSubsystem(final HardwareMap hwMap, final String name) {
         claw = new SimpleServo(hwMap, name, 0, 360);
-        // claw.setRange(0.1, 0.8);
 
-        // opens claw - default
-        // release();
-        // isOpen = true;
     }
 
     // Servo turning
@@ -30,4 +26,7 @@ public class ClawSubsystem extends SubsystemBase {
     public void release() {
         claw.setPosition(0.38);
     }
+
+    public double getAngle() { return claw.getAngle(); }
+    public double getPos() { return claw.getPosition(); }
 }

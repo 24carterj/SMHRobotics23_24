@@ -1,24 +1,32 @@
 package org.firstinspires.ftc.teamcode.commands;
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.LadderSubsystem;
 
 import java.util.function.BooleanSupplier;
 
-public class LadderRetract extends CommandBase {
+public class LadderPower extends CommandBase {
 
     private final LadderSubsystem ladder;
+    private final double power;
 
-    public LadderRetract(LadderSubsystem l) {
+    public LadderPower(LadderSubsystem l, double p) {
         ladder = l;
         addRequirements(ladder);
-        //this.interruptOn(ladder::cantGo);
+
+        power = p;
+        this.interruptOn(ladder::cantGo);
+
+
     }
 
     @Override
     public void execute() {
-        ladder.retract();
+        ladder.set(power);
     }
 
+    @Override
+    public void end(boolean interrupted) { ladder.stop(); }
 }

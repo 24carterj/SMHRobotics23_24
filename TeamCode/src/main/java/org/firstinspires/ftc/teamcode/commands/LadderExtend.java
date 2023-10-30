@@ -11,6 +11,8 @@ public class LadderExtend extends CommandBase {
     public LadderExtend(LadderSubsystem l) {
         ladder = l;
         addRequirements(ladder);
+
+        // this.interruptOn(ladder::cantGo);
     }
 
     @Override

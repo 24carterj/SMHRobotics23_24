@@ -16,44 +16,62 @@ public class ArmSubsystem extends SubsystemBase {
 
     private double speed = 1;
 
+    public static final double MAX_RPM = 435;
+    public static final double MAX_POSITION = 100;
+    public static final double MIN_POSITION = 0;
+
     public ArmSubsystem(final HardwareMap hwMap, final String name) {
         arm = new MotorEx(hwMap, name, Motor.GoBILDA.RPM_435);
-        arm.setRunMode(Motor.RunMode.PositionControl);
+        arm.setRunMode(Motor.RunMode.VelocityControl);
         arm.encoder.reset();
 
-        aff = new ArmFeedforward(0,0,0,0);
+        aff = new ArmFeedforward(0,0,0);
 
+    }
+    public void upPos() {
+        armToPos(0);
+    }
+
+    public void downPos() {
+        armToPos(6);
     }
 
     public void up() {
-        // completely made up value plz help
-        arm.set(-4 * speed);
+        arm.setRunMode(Motor.RunMode.VelocityControl);
+        arm.set(.5);
     }
-
     public void down() {
-        // completely made up value plz help
-        arm.set(2 * speed);
+        arm.setRunMode(Motor.RunMode.VelocityControl);
+        arm.set(-.5);
     }
 
-    public void incrSpeed() {
-        // completely made up value plz help
-        speed+=0.2;
+    public void armToPos(int position) {
+        arm.setRunMode(Motor.RunMode.PositionControl);
+        arm.setTargetPosition(position);
+        arm.set(0.5);
     }
 
-    public void decrSpeed() {
-        // completely made up value plz help
-        speed-=0.2;
+    public double getPos() {
+        return arm.getCurrentPosition();
     }
+
+    public boolean atPos() {
+        return arm.atTargetPosition();
+    }
+
+    public boolean cantGo() {
+        return arm.getVelocity() < 0 && arm.getCurrentPosition() >= MAX_POSITION ||
+               arm.getVelocity() > 0 && arm.getCurrentPosition() <= MIN_POSITION;
+    }
+
+    public void incrSpeed() { speed+=0.2; }
+
+    public void decrSpeed() { speed-=0.2; }
 
     public void stop() {
         arm.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         arm.stopMotor();
     }
-
-    public boolean stopConditions() {
-        return arm.getCurrentPosition() == 0 || arm.getCurrentPosition() == 100;
-    }
-
 
 
     public MotorEx getMotor() {
