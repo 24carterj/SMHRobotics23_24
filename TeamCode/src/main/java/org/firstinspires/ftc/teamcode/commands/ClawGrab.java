@@ -22,7 +22,7 @@ public class ClawGrab extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // need a way to time movement
         return true;
     }
+
 }

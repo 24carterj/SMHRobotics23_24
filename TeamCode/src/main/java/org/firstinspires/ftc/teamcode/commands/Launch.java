@@ -1,25 +1,26 @@
 package org.firstinspires.ftc.teamcode.commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.util.Timing;
 
 import org.firstinspires.ftc.teamcode.subsystems.ClawSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.LauncherSubsystem;
 
-public class ClawRelease extends CommandBase {
-    private final ClawSubsystem claw;
+public class Launch extends CommandBase {
+    private final LauncherSubsystem launcher;
 
-    public ClawRelease(ClawSubsystem c) {
-        claw = c;
-        addRequirements(claw);
+    public Launch(LauncherSubsystem l) {
+        launcher = l;
+        addRequirements(launcher);
     }
 
     @Override
     public void initialize() {
-        claw.release();
+        launcher.launch(); // grab cone
     }
 
     @Override
     public boolean isFinished() {
         return true;
     }
+
 }

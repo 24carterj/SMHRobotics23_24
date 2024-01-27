@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.DefDrive;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 
 
-//@Disabled
+@Disabled
 @TeleOp(name="DriveTrig")
 public class DriveTrigBasic extends CommandOpMode {
     private GamepadEx driver;

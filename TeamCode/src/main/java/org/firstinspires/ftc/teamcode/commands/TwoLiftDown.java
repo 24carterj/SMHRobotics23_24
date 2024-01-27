@@ -14,7 +14,12 @@ public class TwoLiftDown extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         lifts.down();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }

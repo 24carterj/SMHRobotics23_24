@@ -15,7 +15,12 @@ public class TwoLiftUp extends CommandBase {
     }
 
     @Override
-    public void execute() {
+    public void initialize() {
         lifts.up();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 }
